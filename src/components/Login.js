@@ -1,45 +1,69 @@
-// src/components/Login.js
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { Component } from 'react';
+import './LoginPage.css'; // Import the CSS file for styling
 
-function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const history = useNavigate();
+class Login extends Component {
+  constructor(props) {
+    super(props);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // You can implement your API call for login validation here
-    // Example: const response = await loginApi(username, password);
+    this.state = {
+      username: '',
+      password: ''
+    };
+  }
 
-    // If login is successful, redirect to the dashboard
-    // if (response.success) {
-    //   history.push('/dashboard');
-    // }
-    // history.push('/dashboard'); // For demonstration purposes
-
-    // If login is successful, redirect to the dashboard on React 18
-    history('/dashboard');
-
+  handleInputChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
-  return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+  handleLogin = () => {
+    const { username, password } = this.state;
+
+    // Perform login logic here (e.g., send a request to a server)
+
+    // For demonstration purposes, let's log the credentials to the console
+    console.log('Username:', username);
+    console.log('Password:', password);
+  };
+
+  render() {
+    const { username, password } = this.state;
+
+    return (
+      <div className="login-page">
+        <div className="login-form">
+          <h2>Login</h2>
+          <form>
+            <div className="form-group">
+              <label htmlFor="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                onChange={this.handleInputChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={this.handleInputChange}
+                required
+              />
+            </div>
+            <button type="button" onClick={this.handleLogin}>
+              Login
+            </button>
+          </form>
         </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default Login;

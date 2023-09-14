@@ -1,0 +1,94 @@
+/* Style for the navigation bar */
+header {
+    background-color: #007bff; /* Background color for the navigation bar */
+    color: #fff; /* Text color for the navigation bar */
+    padding: 10px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.app-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+li {
+    font-size: 18px;
+}
+
+.logout {
+    font-size: 18px;
+}
+
+/* Style for the form */
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff; /* Background color for the form */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333; /* Text color for headings */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555; /* Text color for labels */
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; /* Border color for input fields */
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing of the textarea */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Background color for the button */
+    color: #fff; /* Text color for the button text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Background color on hover */
+}
+
+/* Style for error messages (if needed) */
+.error-message {
+    color: #ff0000; /* Text color for error messages */
+    margin-top: 10px;
+}

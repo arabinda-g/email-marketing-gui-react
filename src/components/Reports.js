@@ -13,6 +13,29 @@ export default function Status() {
         // window.location.href = '/login';
         // history('/login');
     }
+    
+    // Check if the token is valid by sending a request to the API and checking the http status code
+    fetch(window.globalConfig.apiUrl + '/auth/verify', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+    })
+        .then((response) => {
+            if (response.status === 200) {
+                // The token is valid
+                console.log('Token is valid');
+            } else {
+                // The token is invalid
+                console.log('Token is invalid');
+                window.location.href = '/login';
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
 
     useEffect(() => {
         // Load campaign statistics from the API

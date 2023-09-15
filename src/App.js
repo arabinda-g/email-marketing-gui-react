@@ -7,6 +7,14 @@ import Dashboard from './components/Dashboard';
 import Status from './components/Status';
 
 function App() {
+  // In your JavaScript file
+  window.globalConfig = {
+    apiUrl: 'https://mc_email_api_127.arabinda.me',
+    // apiUrl: 'http://localhost:5214',
+    apiKey: 'your-api-key',
+  };
+
+
   return (
     <Router>
       <Routes>

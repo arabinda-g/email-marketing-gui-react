@@ -1,69 +1,98 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import './LoginPage.css'; // Import the CSS file for styling
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
+function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const history = useNavigate();
 
-    this.state = {
-      username: '',
-      password: ''
-    };
-  }
-
-  handleInputChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  };
-
-  handleLogin = () => {
-    const { username, password } = this.state;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
     // Perform login logic here (e.g., send a request to a server)
 
     // For demonstration purposes, let's log the credentials to the console
     console.log('Username:', username);
     console.log('Password:', password);
+
+
+    // Send username and password to the server
+    // fetch(window.globalConfig.apiUrl + 'auth/login', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ username, password })
+    // });
+
+    axios.post(window.globalConfig.apiUrl + '/auth/login', {
+      username: username,
+      password: password
+    })
+      .then((response) => {
+        // Handle successful response
+        console.log(response.data); // Data from the API
+        history('/dashboard');
+      })
+      .catch((error) => {
+        // Handle error
+        console.error('Error:', error);
+      });
+
+
+    // Clear the input fields
+    // this.setState({ username: '', password: '' });
+
+    // Redirect to the dashboard
+    // history('/dashboard');
+
+
+
+
+
+
+
+
+
+
   };
 
-  render() {
-    const { username, password } = this.state;
 
-    return (
-      <div className="login-page">
-        <div className="login-form">
-          <h2>Login</h2>
-          <form>
-            <div className="form-group">
-              <label htmlFor="username">Username:</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={username}
-                onChange={this.handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={password}
-                onChange={this.handleInputChange}
-                required
-              />
-            </div>
-            <button type="button" onClick={this.handleLogin}>
-              Login
-            </button>
-          </form>
-        </div>
+  return (
+    <div className="login-page">
+      <div className="login-form">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit">
+            Login
+          </button>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Login;

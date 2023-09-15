@@ -9,6 +9,7 @@ export default function Dashboard() {
     const [recipientList, setRecipientList] = useState('');
     const [emailSubject, setEmailSubject] = useState('');
     const [templateHTML, setTemplateHTML] = useState('');
+    const [saving, setSaving] = useState(false);
     const history = useNavigate();
 
     // Check if the user is logged in
@@ -97,6 +98,7 @@ export default function Dashboard() {
 
     const sendDataToServer = async (jsonData) => {
         // Perform your API call here
+        setSaving(true);
         const response = await fetch(window.globalConfig.apiUrl + '/campaigns', {
             method: 'POST',
             headers: {
@@ -130,6 +132,8 @@ export default function Dashboard() {
         } else {
             alert('Failed to create a new campaign');
         }
+
+        setSaving(false);
     };
 
     return (
@@ -221,7 +225,8 @@ export default function Dashboard() {
                         <small>List all variables: {"{{recipient_first_name}}, {{recipient_last_name}}, {{unsubscribe_link}}, {{email_tracker_tag}}"}</small>
                     </div>
                     <div className="form-group">
-                        <button type="submit">Create Campaign</button>
+                        {/* <button type="submit">Create Campaign</button> */}
+                        <button type="submit" disabled={saving}>Create Campaign</button>
                     </div>
                 </form>
             </main>

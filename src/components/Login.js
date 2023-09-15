@@ -33,6 +33,10 @@ function Login() {
       .then((response) => {
         // Handle successful response
         console.log(response.data); // Data from the API
+
+        // Save the token to local storage
+        localStorage.setItem('token', response.data);
+
         history('/dashboard');
       })
       .catch((error) => {

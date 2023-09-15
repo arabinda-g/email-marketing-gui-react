@@ -12,6 +12,9 @@ function App() {
     apiUrl: 'https://mc_email_api_127.arabinda.me',
     // apiUrl: 'http://localhost:5214',
     apiKey: 'your-api-key',
+
+    // Store the application name
+    appName: 'Email Marketing',
   };
 
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import './Dashboard.css'; // Import your CSS file for styling
 
@@ -8,6 +9,14 @@ export default function Dashboard() {
     const [recipientList, setRecipientList] = useState('');
     const [emailSubject, setEmailSubject] = useState('');
     const [templateHTML, setTemplateHTML] = useState('');
+    const history = useNavigate();
+
+    // Check if the user is logged in
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/login';
+        // history('/login');
+    }
 
     const handleCsvChange = (e) => {
         setRecipientList(e.target);
@@ -115,7 +124,7 @@ export default function Dashboard() {
             setEmailSubject('');
             setTemplateHTML('');
             setCsvFile(null);
-    
+
             // Clear the file input field
             document.getElementById('recipientList').value = null;
         } else {
@@ -130,11 +139,16 @@ export default function Dashboard() {
                     {/* <div className="app-name">Your Application Name</div> */}
                     <div className="app-name">{window.globalConfig.appName}</div>
                     <ul>
-                        <li><a href="/dashboard">Create Campaign</a></li>
-                        <li><a href="/status">Campaign Status</a></li>
+                        {/* <li><a href="/dashboard">Create Campaign</a></li> */}
+                        {/* <li><a href="/reports">View Reports</a></li> */}
+                        {/* Redirect using react */}
+                        {/* <li><a href="/reports" onClick={() => { history('/reports') }}>View Reports</a></li> */}
+                        <li><a href="javascript:void(0)" onClick={() => { history('/dashboard') }}>Create Campaign</a></li>
+                        <li><a href="javascript:void(0)" onClick={() => { history('/reports') }}>View Reports</a></li>
                     </ul>
                     {/* <div className="logout"><a href="#">Logout</a></div> */}
-                    <div className="logout"><a href="/login">Logout</a></div>
+                    {/* <div className="logout"><a href="/login">Logout</a></div> */}
+                    <a href="javascript:void(0)" onClick={() => { history('/login'); localStorage.removeItem('token') }}>Logout</a>
                 </nav>
             </header>
 
@@ -150,18 +164,23 @@ export default function Dashboard() {
                             value={campaignName}
                             onChange={handleInputChange}
                             required
+                            maxLength="100"
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="recipientList">Recipient List (comma-separated emails):</label>
+                        <label htmlFor="recipientList">Recipient List (csv): &nbsp;
+                            {/* <small><a href={window.globalConfig.apiUrl + '/sample.csv'} download target='_blank'>Download Sample</a></small> */}
+                            {/* With custom file name */}
+                            <small><a href={window.globalConfig.apiUrl + '/sample/recipients.csv'} download='sample.csv' target='_blank'>Download Sample</a></small>
+                        </label>
                         <input type="file" accept=".csv"
                             id="recipientList"
                             name="recipientList"
                             // value={recipientList}
-                            onChange={handleCsvChange} 
+                            onChange={handleCsvChange}
                             required
-                            
-                            />
+
+                        />
                         {/* <input type="file" accept=".csv"
                         id="recipientList"
                         name="recipientList"
@@ -184,6 +203,7 @@ export default function Dashboard() {
                             value={emailSubject}
                             onChange={handleInputChange}
                             required
+                            maxLength="200"
                         />
                     </div>
                     <div className="form-group">
@@ -194,11 +214,14 @@ export default function Dashboard() {
                             value={templateHTML}
                             onChange={handleInputChange}
                             rows="8"
+                            maxLength="30000"
                             required
                         ></textarea>
+                        {/* List all variables: {{recipient_first_name}}, {{recipient_last_name}}, {{unsubscribe_link}}, {{email_tracker_tag}} */}
+                        <small>List all variables: {"{{recipient_first_name}}, {{recipient_last_name}}, {{unsubscribe_link}}, {{email_tracker_tag}}"}</small>
                     </div>
                     <div className="form-group">
-                        <button type="submit" >Submit</button>
+                        <button type="submit">Create Campaign</button>
                     </div>
                 </form>
             </main>

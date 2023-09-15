@@ -92,3 +92,9 @@ button:hover {
     color: #ff0000; /* Text color for error messages */
     margin-top: 10px;
 }
+
+/* Style for nav links */
+nav a {
+    /* text-decoration: none; */
+    color: #fff; /* Text color for nav links */
+}

@@ -7,6 +7,7 @@ import './LoginPage.css'; // Import the CSS file for styling
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState(''); // For displaying error messages
   const history = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -42,6 +43,7 @@ function Login() {
       .catch((error) => {
         // Handle error
         console.error('Error:', error);
+        setMessage('Invalid username or password');
       });
 
 
@@ -67,6 +69,8 @@ function Login() {
     <div className="login-page">
       <div className="login-form">
         <h2>Login</h2>
+        {/* Display the message */}
+        {message && <div className="error-message">{message}<br /><br /></div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username:</label>
